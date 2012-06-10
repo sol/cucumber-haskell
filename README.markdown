@@ -51,7 +51,7 @@ This would then expand to something like:
 given_0 :: String -> Maybe String
 given_0 = case match input "a lambda term \"([^\"]*)\"" of
   [x] -> Just (id x)
-  _  -> Nothing
+  _   -> Nothing
 
 when_0 :: String -> Maybe (String -> Term)
 when_0 input
