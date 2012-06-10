@@ -6,6 +6,7 @@ Want to help?  Join in at `#hspec` on freenode!
 
 ## Support
 
+ * https://github.com/sakari/haskell-gherkin
  * https://github.com/cucumber/cucumber-tck
  * https://github.com/cucumber/cucumber-bootstrap
 
