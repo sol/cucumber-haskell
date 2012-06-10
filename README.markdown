@@ -49,7 +49,7 @@ This would then expand to something like:
 
 ```haskell
 given_0 :: String -> Maybe String
-given_0 = case math input "a lambda term \"([^\"]*)\"" of
+given_0 = case match input "a lambda term \"([^\"]*)\"" of
   [x] -> Just (id x)
   _  -> Nothing
 
