@@ -29,6 +29,12 @@ This should result in the following _test term_:
 (show . reduce . parse) "(λx.x)y" `shouldBe` "y"
 ```
 
+Or:
+
+```haskell
+flip shouldBe (show (reduce (parse (id "(λx.x)y"))))
+```
+
 So how would we give step definitions for that?  Currently I think Template
 Haskell is our best bet. (I do not really like it!  If you have any other
 ideas, please let me know.)
