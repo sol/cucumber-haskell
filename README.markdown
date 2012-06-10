@@ -32,7 +32,7 @@ This should result in the following _test term_:
 Or:
 
 ```haskell
-(flip shouldBe "y") (show (reduce (parse (id "(λx.x)y"))))
+flip shouldBe "y" (show (reduce (parse (id "(λx.x)y"))))
 ```
 
 So how would we give step definitions for that?  Currently I think Template
