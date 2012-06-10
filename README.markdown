@@ -4,7 +4,9 @@
 
 Want to help?  Join in at `#hspec` on freenode!
 
-## Ideas
+## Sketch
+
+Let's start with a simple feature:
 
 ```feature
 Feature: Beta reduction of lambda terms
@@ -28,8 +30,8 @@ This should result in the following _test term_:
 ```
 
 So how would we give step definitions for that?  Currently I think Template
-Haskell is our best bet (I do not really like it!  If you have any other ideas,
-please let me know.).
+Haskell is our best bet. (I do not really like it!  If you have any other
+ideas, please let me know.)
 
 ```haskell
 $(given "a lambda term \"([^\"]*)\"") = id
@@ -40,7 +42,7 @@ $(when "I reduce it") = reduce
 
 $(when "I pretty-print it") = show
 
-$(then "the result should be \"([^\"]*)\"") = \x -> (`shouldBe` x)
+$(then_ "the result should be \"([^\"]*)\"") = flip shouldBe
 ```
 
 This would then expand to something like:
@@ -68,7 +70,7 @@ when_2 input
 
 then_0 :: String -> Maybe Expectation
 then_0 input = case match input "the result should be \"([^\"]*)\"" of
-  [y] -> Just (\x -> `shouldBe` x $ y)
+  [x] -> Just (flip shouldBe x)
   _   -> Nothing
 ```
 
