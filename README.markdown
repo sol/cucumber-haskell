@@ -26,13 +26,13 @@ Feature: Beta reduction of lambda terms
 This should result in the following _test term_:
 
 ```haskell
-(show . reduce . parse) "(λx.x)y" `shouldBe` "y"
+test = (show . reduce . parse) "(λx.x)y" `shouldBe` "y"
 ```
 
 Or:
 
 ```haskell
-(`shouldBe` "y") (show (reduce (parse (id "(λx.x)y"))))
+test = flip shouldBe "y" (show (reduce (parse (id "(λx.x)y"))))
 ```
 
 So how would we give step definitions for that?  Currently I think Template
@@ -80,8 +80,19 @@ then_0 input = case match input "the result should be \"([^\"]*)\"" of
   _   -> Nothing
 ```
 
-And we would then use some more Template Haskell + preprocessor magic to
-construct the test expression.
+Constructing the test term from that is simple:
+
+```haskell
+import Control.Applicative
+
+(<+>) = flip (<*>)
+
+test = then_0  "the result should be \"y\""
+   <*> when_2  "I pretty-print it"
+   <*> when_1  "I reduce it"
+   <*> when_0  "I parse it"
+   <*> given_0 "a lambda term \"(λx.x)y\""
+```
 
 ### What to do if multiple things are given?
 
