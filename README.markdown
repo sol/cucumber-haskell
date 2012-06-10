@@ -80,18 +80,18 @@ then_0 input = case match input "the result should be \"([^\"]*)\"" of
   _   -> Nothing
 ```
 
-Constructing the test term from that is simple:
+In theory, constructing the test term from that is easy:
 
 ```haskell
+import Data.Maybe
 import Control.Applicative
 
-(<+>) = flip (<*>)
-
-test = then_0  "the result should be \"y\""
-   <*> when_2  "I pretty-print it"
-   <*> when_1  "I reduce it"
-   <*> when_0  "I parse it"
-   <*> given_0 "a lambda term \"(λx.x)y\""
+test = fromJust $
+      then_0  "the result should be \"y\""
+  <*> when_2  "I pretty-print it"
+  <*> when_1  "I reduce it"
+  <*> when_0  "I parse it"
+  <*> given_0 "a lambda term \"(λx.x)y\""
 ```
 
 ### What to do if multiple things are given?
