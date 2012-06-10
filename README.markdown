@@ -1,6 +1,6 @@
 # Cucumber for Haskell
 
-> And effort to bring Cucumber-ish BDD to Haskell.
+> An effort to bring Cucumber-ish BDD to Haskell.
 
 Want to help?  Join in at `#hspec` on freenode!
 
