@@ -79,8 +79,8 @@ construct the test expression.
 
 ### What to do if multiple things are given?
 
-The resulting `When` values could then be applied to the term we get from the
-first `When` step.
+The resulting values could than be applied to the term we get from the first
+`When` step.
 
 ## Support
 
