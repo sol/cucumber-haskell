@@ -26,13 +26,13 @@ Feature: Beta reduction of lambda terms
 This should result in the following _test term_:
 
 ```haskell
-test = (show . reduce . parse) "(λx.x)y" `shouldBe` "y"
+(show . reduce . parse) "(λx.x)y" `shouldBe` "y"
 ```
 
 Or:
 
 ```haskell
-test = flip shouldBe "y" (show (reduce (parse (id "(λx.x)y"))))
+(`shouldBe` "y") (show (reduce (parse (id "(λx.x)y"))))
 ```
 
 So how would we give step definitions for that?  Currently I think Template
