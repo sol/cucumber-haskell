@@ -4,6 +4,82 @@
 
 Want to help?  Join in at `#hspec` on freenode!
 
+## Ideas
+
+```feature
+Feature: Beta reduction of lambda terms
+
+  In order to be able to reduce lambda terms
+  As a programmer
+  I want a function that reduces lambda terms
+
+  Scenario: Reducing a simple lambda term
+    Given a lambda term "(λx.x)y"
+    When I parse it
+    And I reduce it
+    And I pretty-print it
+    Then the result should be "y"
+```
+
+This should result in the following _test term_:
+
+```haskell
+(show . reduce . parse) "(λx.x)y" `shouldBe` "y"
+```
+
+So how would we give step definitions for that?  Currently I think Template
+Haskell is our best bet (I do not really like it!  If you have any other ideas,
+please let me know.).
+
+```haskell
+$(given "a lambda term \"([^\"]*)\"") = id
+
+$(when "I parse it") = parse
+
+$(when "I reduce it") = reduce
+
+$(when "I pretty-print it") = show
+
+$(then "the result should be \"([^\"]*)\"") = \x -> (`shouldBe` x)
+```
+
+This would then expand to something like:
+
+```haskell
+given_0 :: String -> Maybe String
+given_0 = case math input "a lambda term \"([^\"]*)\"" of
+  [x] -> Just (id x)
+  _  -> Nothing
+
+when_0 :: String -> Maybe (String -> Term)
+when_0 input
+  | input == "I parse it" = Just parse
+  | otherwise             = Nothing
+
+when_1 :: String -> Maybe (Term -> Term)
+when_1 input
+  | input == "I reduce it" = Just reduce
+  | otherwise              = Nothing
+
+when_2 :: Show a => String -> Maybe (a -> String)
+when_2 input
+  | input == "I pretty-print it" = Just show
+  | otherwise                    = Nothing
+
+then_0 :: String -> Maybe Expectation
+then_0 input = case match input "the result should be \"([^\"]*)\"" of
+  [y] -> Just (\x -> `shouldBe` x $ y)
+  _   -> Nothing
+```
+
+And we would then use some more Template Haskell + preprocessor magic to
+construct the test expression.
+
+### What to do if multiple things are given?
+
+The resulting `When` values could then be applied to the term we get from the
+first `When` step.
+
 ## Support
 
  * https://github.com/sakari/haskell-gherkin
