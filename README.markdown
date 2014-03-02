@@ -109,6 +109,8 @@ The resulting values could than be applied to the term we get from the first
 
 Other efforts to implement a Cucumber-ish BDD framework for Haskell:
 
+ * http://hackage.haskell.org/package/chuchu
+
  * https://github.com/sakari/haskell-cucumber (relies on state!)
 
  * https://github.com/confucius/ConcombreAuCurry (nothing here yet!)
